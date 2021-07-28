@@ -13,9 +13,12 @@ const generateRandom = () => {
 };
 generateRandom();
 
-let score = 20;
+//
 
-document.querySelector('.number').textContent = number;
+let score = 20;
+let highScore = 0;
+
+// document.querySelector('.number').textContent = number;
 
 document.querySelector('.check').addEventListener('click', function () {
   guess = Number(document.querySelector('.guess').value);
@@ -26,27 +29,39 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('.message').textContent = 'Correct Number';
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
-  } else if (guess > number) {
-    if (score > 1) {
-      score = score - 1;
-      document.querySelector('.score').textContent = score;
-      document.querySelector('.message').textContent = 'Too High';
-    } else {
-      document.querySelector('.message').textContent = 'You lost the game';
-      document.querySelector('.score').textContent = 0;
-      document.querySelector('.guess').value = '';
+    if (score > highScore) {
+      highScore = score;
+      document.querySelector('.highscore').textContent = highScore;
     }
-  } else {
+  } else if (guess !== number) {
     if (score > 1) {
-      score = score - 1;
+      document.querySelector('.message').textContent =
+        guess > number ? 'Too High' : 'Too low';
+      score--;
       document.querySelector('.score').textContent = score;
-      document.querySelector('.message').textContent = 'Too Low';
     } else {
-      document.querySelector('.message').textContent = 'You lost the game';
+      document.querySelector('.message').textContent = 'You Lost the game';
       document.querySelector('.score').textContent = 0;
-      document.querySelector('.guess').value = '';
     }
   }
+
+  // else if (guess > number) {
+  //   if (score > 1) {
+  //     score = score - 1;
+  //     document.querySelector('.score').textContent = score;
+  //     document.querySelector('.message').textContent = 'Too High';
+  //   } else {
+  //     whenLost();
+  //   }
+  // } else {
+  //   if (score > 1) {
+  //     score = score - 1;
+  //     document.querySelector('.score').textContent = score;
+  //     document.querySelector('.message').textContent = 'Too Low';
+  //   } else {
+  //     whenLost();
+  //   }
+  // }
 });
 
 //game reset functionality
